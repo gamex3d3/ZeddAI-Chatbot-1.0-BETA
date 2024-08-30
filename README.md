@@ -6,11 +6,8 @@ DOCUMENTATION | 4/11/2024
 1.	Login and password:
  	The USERNAME/EMAIL is “user@example.com” (case sensitive) and the PASSWORD is “password”(also case sensitive), this are the credentials needed to login to the app for the first time.
 
-2.	Features and what’s new:
-I.)	  Time and Date	Search
-II.)	Artificial Intelligence(Unavailable)	Summarize
-III.)	Calculate
-IV.)	Who is
+2.	Features and what’s new: Time and Date,	Search, Artificial Intelligence(Unavailable),	Summarize, Calculate, Who is.
+   
 This features are also PROMPTS when using the software. For example: Summarize romeo and julliet, Who is Nelson Mandela, Calculate 2x + 4 = 20, Search on the effects of pollution e.t.c
 
 3.	Settings(Themes and UI Scaling):
