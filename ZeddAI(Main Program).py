@@ -198,7 +198,7 @@ class Window2(customtkinter.CTk):
         widget.insert("end", "\n\n")
         
     def computational_intelligence(self, question):
-        app_id = "7E8RXT-5E8UJ7K2AX"
+        app_id = "add your key here"
         try:
             client = wolframalpha.Client(app_id)
             answer = client.query(question)
@@ -316,7 +316,7 @@ class Window2(customtkinter.CTk):
         self.entry.delete(0, customtkinter.END)
     
     def sidebar_button_event(self):
-        self.typewrite_text(self.textbox, "CREDIT: C^2 2024© All rights reserved.")
+        self.typewrite_text(self.textbox, "CREDIT: Charis George 2024© All rights reserved.")
         print("Account Button Clicked")
 
         
