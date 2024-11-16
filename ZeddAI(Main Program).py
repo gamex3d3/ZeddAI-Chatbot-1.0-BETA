@@ -7,6 +7,7 @@ import random
 import time
 from tkinter import messagebox, PhotoImage
 from PIL import ImageTk, Image
+import allura
 
 Username = "Admin"
 app = customtkinter.CTk()
@@ -158,6 +159,7 @@ class Window2(customtkinter.CTk):
         self.title("ZeddAI(Educational Chatbot Library)")
         self.geometry(f"{1100}x{580}")
         self.iconbitmap("logo1.ico")
+        self.conversation_history = [] 
 
         # configure grid layout (4x4)
         self.grid_columnconfigure(1, weight=1)
@@ -170,6 +172,8 @@ class Window2(customtkinter.CTk):
         self.sidebar_frame.grid_rowconfigure(4, weight=1)
         self.logo_label = customtkinter.CTkLabel(self.sidebar_frame, text="✨ ZeddAI", font=("Arial bold", 24))
         self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+
+        self.conversation = []
 
         self.sidebar_button_user = customtkinter.CTkButton(self.sidebar_frame, command=self.sidebar_button_event, text= Username, text_color=("gray10", "#DCE4EE"), border_width=2, fg_color="transparent",  hover_color="gray10")
         self.sidebar_button_user.grid(row=1, column=0, padx=20, pady=10)
@@ -196,9 +200,16 @@ class Window2(customtkinter.CTk):
             widget.update_idletasks()
             time.sleep(delay)
         widget.insert("end", "\n\n")
+        self.conversation.append(text)
+
+    def save_conversation(self):
+        with open("conversation.txt", "a", encoding="utf-8") as file:
+            for line in self.conversation:
+                file.write(line + "\n")
+                messagebox.showinfo("Conversation Saved", "The conversation has been saved to 'conversation_log.txt'.")
         
     def computational_intelligence(self, question):
-        app_id = "add your key here"
+        app_id = "7E8RXT-5E8UJ7K2AX"
         try:
             client = wolframalpha.Client(app_id)
             answer = client.query(question)
@@ -224,10 +235,10 @@ class Window2(customtkinter.CTk):
         text = self.entry.get()
         converted_text = self.to_lower(text)
         input_get = converted_text
+        self.conversation.append(f"You: {input_get}")  # Add user input to conversation log
+        self.textbox.insert("end", f"You: {input_get}\n\n")
         print(input_get)
         inpeut.set('')
-        
-        self.textbox.insert("end", f"You: {input_get}\n\n")
         
         if 'date' in input_get:
             self.typewrite_text(self.textbox, "AI: The date is " + f"{datetime.datetime.now():%A, %B %d, %Y}")
@@ -239,8 +250,8 @@ class Window2(customtkinter.CTk):
         
         elif 'what are the features' in input_get:
             features_text = (
-                "This are the basic things I can do:\n"
-                "1. Enquiry Chat Library\n\n"
+                "This are the basic things I can do:\n\n"
+                "1. Enquiry Chat Library\n"
                 "2. Who is (Online)\n"
                 "3. Calculate (Online)\n"
                 "4. Summarize (Online)\n"
@@ -291,6 +302,9 @@ class Window2(customtkinter.CTk):
             except:
                 self.typewrite_text(self.textbox, 'AI: Reconnecting to Wi-Fi...')
                 
+        if 'save conversation' in input_get:
+            self.save_conversation()  # Save conversation if the user requests it
+            self.typewrite_text(self.textbox, 'AI: Conversation has been saved!' ) 
 
         elif 'bye' in input_get or 'goodbye' in input_get:
             st_msgs = (
@@ -306,17 +320,15 @@ class Window2(customtkinter.CTk):
             sys.exit()
 
         else:
-            try:
-                In = input_get
-                wikie = wikipedia.summary(In, sentences = 100)
-                self.typewrite_text(self.textbox, "AI: " + wikie)
-            except:
-                self.typewrite_text(self.textbox, 'AI: Reconnecting to Wi-Fi....')
+            seed_text = input_get
+            convo_text = allura.predict_next_word(seed_text, next_words=5)
+            self.typewrite_text(self.textbox, convo_text)
+            print(convo_text)
 
         self.entry.delete(0, customtkinter.END)
     
     def sidebar_button_event(self):
-        self.typewrite_text(self.textbox, "CREDIT: Charis George 2024© All rights reserved.")
+        self.typewrite_text(self.textbox, "CREDIT: C^2 2024© All rights reserved.")
         print("Account Button Clicked")
 
         
